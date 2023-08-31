@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .video-container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 30px solid #ccc;
+    flex-direction: column;
+    width: 450px;
+    height: 290px;
+  }
+  
+  .thumbnail img {
+    width: 420px;
+    height: 200px;
+    /* object-fit: cover; */
+    margin-right: 10px;
+    flex-direction: column;
+  }
+  
+  .video-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .channel-photo {
+    width: 40px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .channel-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .channel-name {
+    font-weight: bold;
+  }
+  
+  .timestamp {
+    color: #777;
+  }
+  
+  

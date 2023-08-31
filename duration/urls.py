@@ -8,3 +8,4 @@ urlpatterns = [
 
     # path('about/', views.about, name='duration-about'),
 ]
+
