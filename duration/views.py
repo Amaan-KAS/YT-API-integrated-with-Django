@@ -7,6 +7,7 @@ from datetime import datetime
 import json
 import requests
 import pytz
+from .models import *
 # Create your views here.
 
 def home(request):
@@ -51,7 +52,10 @@ def user_info_view(request):
             response = requests.get(playlist_search_url, params=param)
             # response = modify_response(response.json)
             data = response.json()
+            print(response.json)
+            count =0 
             for item in data['items']:
+                count+=1
                 published_at = item['contentDetails']['videoPublishedAt']
                 published_datetime = datetime.strptime(published_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=pytz.UTC)
                 current_datetime = datetime.now(pytz.UTC)
@@ -59,6 +63,24 @@ def user_info_view(request):
                 formatted_time_difference = naturaltime(time_difference)
                 item['contentDetails']['videoPublishedAt'] = formatted_time_difference
                 print(item['contentDetails']['videoPublishedAt'])
+
+            inst = Playlist_Id(
+                playlist_Id =url_link_playlistId[1],
+                channel_Name = data['items'][0]['snippet']['channelTitle'],
+                num_of_videos = count,
+                channel_id = data['items'][0]['snippet']['channelId']
+            )
+            inst.save()
+
+            for item in data['items']:
+                Playlist_items(
+                playlist_Id = inst,
+                video_Id = item['contentDetails']['videoId'],
+                title = item['snippet']['title'],
+                description = item['snippet']['description'],
+                thumbnail = item['snippet']['thumbnails']['standard']['url'],
+                video_published = item['contentDetails']['videoPublishedAt']
+                ).save()
 
             return render(request,"playlist.html",{"form": data})
     # if a GET (or any other method) we'll create a blank form
